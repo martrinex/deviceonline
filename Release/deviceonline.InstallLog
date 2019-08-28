@@ -1,0 +1,102 @@
+﻿Installing assembly 'C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.InstallLog
+   assemblypath = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe
+Installing service DeviceOnline...
+Creating EventLog source DeviceOnline in log Application...
+Rolling back assembly 'C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.InstallLog
+   assemblypath = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe
+Restoring event log to previous state for source DeviceOnline.
+Installing assembly 'C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.InstallLog
+   assemblypath = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe
+Installing service DeviceOnline...
+Creating EventLog source DeviceOnline in log Application...
+Rolling back assembly 'C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.InstallLog
+   assemblypath = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe
+Restoring event log to previous state for source DeviceOnline.
+Uninstalling assembly 'C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.InstallLog
+   assemblypath = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe
+Removing EventLog source DeviceOnline.
+Service DeviceOnline is being removed from the system...
+Service DeviceOnline was successfully removed from the system.
+Installing assembly 'C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.InstallLog
+   assemblypath = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe
+Installing service DeviceOnline...
+Service DeviceOnline has been successfully installed.
+Creating EventLog source DeviceOnline in log Application...
+Committing assembly 'C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.InstallLog
+   assemblypath = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe
+Uninstalling assembly 'C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.InstallLog
+   assemblypath = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe
+Removing EventLog source DeviceOnline.
+Service DeviceOnline is being removed from the system...
+Service DeviceOnline was successfully removed from the system.
+Installing assembly 'C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.InstallLog
+   assemblypath = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe
+Installing service DeviceOnline...
+Service DeviceOnline has been successfully installed.
+Creating EventLog source DeviceOnline in log Application...
+Committing assembly 'C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.InstallLog
+   assemblypath = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe
+Installing assembly 'C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.InstallLog
+   assemblypath = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe
+Installing service DeviceOnline...
+Creating EventLog source DeviceOnline in log Application...
+Rolling back assembly 'C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.InstallLog
+   assemblypath = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe
+Restoring event log to previous state for source DeviceOnline.
+Uninstalling assembly 'C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.InstallLog
+   assemblypath = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe
+Removing EventLog source DeviceOnline.
+Service DeviceOnline is being removed from the system...
+Service DeviceOnline was successfully removed from the system.
+Installing assembly 'C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.InstallLog
+   assemblypath = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe
+Installing service DeviceOnline...
+Service DeviceOnline has been successfully installed.
+Creating EventLog source DeviceOnline in log Application...
+Committing assembly 'C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.InstallLog
+   assemblypath = C:\Users\martin\source\repos\DeviceOnline\DeviceOnline\bin\Release\deviceonline.exe
