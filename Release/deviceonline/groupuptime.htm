@@ -1,0 +1,67 @@
+<html>
+<head>
+[query:dates:=SELECT CURRENT_DATE AS `today`, date('now','-7 day') AS `lastweek`,date('now','start of month') AS `startmonth`,date('now','start of month','-1 month') AS `lastmonth` FROM users WHERE `rowid`=1]
+
+[default:reportfrom=$dates_lastweek]
+[default:reportto=$dates_today]
+[blockif:$post_btnsubmit=='Show Last 7 Days']
+ [set:reportfrom=$dates_lastweek]
+ [set:reportto=$dates_today]
+[endif]
+[blockif:$post_btnsubmit=='Show This Month']
+ [set:reportfrom=$dates_startmonth]
+ [set:reportto=$dates_today]
+[endif]
+[blockif:$post_btnsubmit=='Show Last Month']
+ [set:reportfrom=$dates_lastmonth]
+ [set:reportto=$dates_startmonth]
+[endif]
+[blockif:$post_btnsubmit=='Update Report']
+ [set:reportfrom=$post_from]
+ [set:reportto=$post_to]
+[endif]
+
+[query:group:=SELECT `name` FROM `groups` WHERE `rowid`=$get_id;]
+<link href="style.css" rel="stylesheet" type="text/css">
+
+[query:uptime:=SELECT `devices`.`name` AS `device name`, DATE(`day`) AS `day`,`minutesonline`,`minutesoffline`,`periods`.`name`,round(((CAST(`minutesonline` AS FLOAT)/(`minutesonline`+`minutesoffline`))*100.0))||"%" AS `uptime` FROM `uptime`,`devices`,`periods` WHERE `uptime`.`period`=`periods`.`rowid` AND `devices`.`rowid`=`uptime`.`deviceid` AND `groupid`=$get_id AND `day` BETWEEN date('$reportfrom') AND date('$reportto');]
+
+[query:totals:=SELECT SUM(`minutesonline`) AS `Minutes Online`,SUM(`minutesoffline`) AS `Minutes Offline`,round((CAST(SUM(`minutesonline`) AS FLOAT)/(SUM(`minutesonline`)+SUM(`minutesoffline`))*100.0))||'%' AS `Uptime` FROM `uptime`,`devices` WHERE `uptime`.`deviceid`=`devices`.`rowid` AND `devices`.`groupid`=$get_id AND `day` BETWEEN date('$reportfrom') AND date('$reportto');]
+
+</head>
+<body>
+<form method='post'>
+<h1>Date Filter:</h1>
+<input type='submit' name='btnsubmit' value='Show Last 7 Days' />
+<input type='submit' name='btnsubmit' value='Show This Month' />
+<input type='submit' name='btnsubmit' value='Show Last Month' /><br/>
+<label>Date from:</label><br/><input type='text' name='from' value='$reportfrom;' /><br/>
+<label>Date to:</label><br/><input type='text' name='to' value='$reportto;' /><br/>
+<input type='submit' name='btnsubmit' value='Update Report' />
+</form>
+<h1>Group '$group_name;' uptime.</h1>
+Report showing: $reportfrom; to $reportto;<br/>
+
+<h2>Total Uptime</h2>
+[pie:128,10,$totals_uptime,totaluptime.png,Total uptime: $totals_uptime]
+$totals_table;
+<h2>Total Uptime per period</h2>
+
+[foreach:SELECT `periodid` FROM `groupperiods` WHERE `groupid`=$get_id;]
+[query:periodtotals:=SELECT `periods`.`name`, SUM(`minutesonline`) AS `Minutes Online`,SUM(`minutesoffline`) AS `Minutes Offline`,(CAST(SUM(`minutesonline`) AS FLOAT)/(SUM(`minutesonline`)+SUM(`minutesoffline`))*100.0)||'%' AS `Uptime` FROM `uptime`,`periods`,`devices` WHERE `periods`.`rowid`=$_ AND `devices`.`rowid`=`uptime`.`deviceid` AND `devices`.`groupid`=$get_id AND `period`=$_ AND `day` BETWEEN date('$reportfrom') AND date('$reportto');]
+[pie:128,10,$periodtotals_uptime,$__totaluptime.png,$periodtotals_name uptime: $periodtotals_uptime]
+[echo:$periodtotals_table]
+[endeach]
+<h2>Uptime per device</h2>
+[foreach:SELECT `devices`.`rowid` FROM `uptime`,`devices` WHERE `uptime`.`deviceid`=`devices`.`rowid` AND `devices`.`groupid`=$get_id GROUP BY `deviceid`;]
+[query:deviceuptime:=SELECT (CAST(SUM(`minutesonline`) AS FLOAT)/(SUM(`minutesonline`)+SUM(`minutesoffline`))*100.0) AS `Uptime` FROM `uptime` WHERE `deviceid`=$_;]
+[pie:20,0,$deviceuptime_uptime,$_.png,,false]
+[endfor]
+[query:deviceuptime:=SELECT '<img src="graphs\'||`devices`.`rowid`||'.png" />' AS '',`devices`.`name`,SUM(`minutesonline`) AS `Minutes Online`,SUM(`minutesoffline`) AS `Minutes Offline`,round((CAST(SUM(`minutesonline`) AS FLOAT)/(SUM(`minutesonline`)+SUM(`minutesoffline`))*100.0))||'%' AS `Uptime` FROM `uptime`,`devices` WHERE `uptime`.`deviceid`=`devices`.`rowid` AND `devices`.`groupid`=$get_id GROUP BY `deviceid` ORDER BY `Uptime`;]
+$deviceuptime_table;
+<h2>Uptime Log</h2>
+$uptime_table;
+<a class='button' style='float:right;' href='index.htm'>Back Home</a>
+<a class='button' style='float:right;' href='groupuptime.htm?id=$device_groupid;'>Group Uptime</a>
+</body>
+</html>

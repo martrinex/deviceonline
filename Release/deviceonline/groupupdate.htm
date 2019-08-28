@@ -1,0 +1,70 @@
+<html>
+<head>
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+[blockif:$post_btnsubmit=='Update Group']
+ [query:r:=UPDATE `groups` SET `name`='$post_name',`pingfrequency`=$post_pingfrequency,`mailto`='$post_mailto' WHERE `rowid`=$post_rowid]
+ [if:$r==1]
+ [echo:<div class='notice'>Group '$post_name' Updated.</div>]
+[endif]
+[blockif:$post_btnsubmit=='Delete Group']
+ [query:r:=DELETE FROM `groups` WHERE `rowid`=$post_rowid]
+ [query:DELETE FROM `devices` WHERE `groupid`=$post_rowid]
+ [if:$r==1][echo:<div class='notice'>Group deleted</div>]
+ [echo:<a class='button' style='float:right;' href='settings.htm'>Settings</a>]
+ [echo:<a class='button' style='float:right;' href='index.htm'>Back Home</a></body></html>]
+ [endpage]
+[endif]
+[blockif:$get_job=='removeperiod']
+ [if:$get_periodid==1][echo:<div class='error'>You cannot remove the default period, but you can update it.</div>]
+ [query:DELETE FROM `groupperiods` WHERE `groupid`=$get_id AND `periodid`=$get_periodid AND `periodid`!=1;]
+ [if:$r==1]
+ [echo:<div class='notice'>Time period removed.</div>]
+[endif]
+[blockif:$post_btnsubmit=='Add / Update Period']
+ [query:DELETE FROM `groupperiods` WHERE `groupid`=$get_id AND `periodid`=$post_timeperiod;]
+ [query:r:=INSERT INTO `groupperiods` (`groupid`,`periodid`,`alertmins`) VALUES ($get_id,$post_timeperiod,$post_delaymins);]
+ [if:$r==1]
+ [echo:<div class='notice'>Time period assigned.</div>]
+[endif]
+
+[query:devices:=SELECT "<a href='deviceupdate.htm?id="||`rowid`||"'>"||`name`||"</a>" as Name,online as Online,lastonline as 'Last Online' FROM `devices` WHERE `groupid`=$get_id]
+[query:group:=SELECT rowid,* FROM `groups` WHERE `rowid`=$get_id]
+[query:groupperiods:=SELECT `periods`.`name` AS `Name`,time(`periods`.`start`) AS `Period Start`,time(`periods`.`end`) AS `Period End`,`groupperiods`.`alertmins`||' minutes.' AS `Alert delay`,"<a href='?id=$get_id&job=removeperiod&periodid="||`groupperiods`.`periodid`||"'>Remove</a>" AS `Tasks` FROM `groupperiods`,`periods` WHERE `groupperiods`.`periodid`=`periods`.`rowid` AND `groupid`=$get_id]
+
+<form method='post' action='?id=$get_id;'>
+<input type='hidden' value='$group_rowid;' name='rowid' />
+<h1>Update Group $get_id;</h1><br/>
+<label>Name:</label><br/><input type='text' name='name' value='$group_name;' /><br/>
+<label>Ping Frequency:</label><br/>
+<select name="pingfrequency">
+[option:$group_pingfrequency,1#1 min,5#5 mins,15#15 mins,30#30 mins,60#1 hour,720#12 hours,1440#24 hours]
+</select><br/>
+<label>Notify Email:</label>(Use commas to seperate multiple emails)<br/><input type='text' name='mailto' value='$group_mailto;' /><br/>
+<input type='submit' name='btnsubmit' value='Update Group' />
+<input type='submit' name='btnsubmit' class='delete' value='Delete Group' />
+</form>
+<form method='post' action='?id=$get_id;'>
+<h1>Group Periods:</h1>
+<div style='margin:8px;background-color:#FFFFFF;'>$groupperiods_table;</div>
+<label>Alert Delay Minutes:</label><br/>
+<select name='delaymins'>
+ [option:30,1#1 minutes,5#5 minutes,10#10 minutes,15#15 minutes,30#30 minutes,45#45 minutes,60#1 hour,90#1hour 30minutes,120#2 hours]
+</select><br/>
+<label>Time Period:</label><br/>
+<select name='timeperiod'>
+ [option:2,query:SELECT `rowid`||'' AS `value`, `name` FROM `periods`]
+</select><br/>
+<input type='submit' name='btnsubmit' value='Add / Update Period' />
+</form>
+<form>
+<h1>Devices:</h1>
+<div style='margin:8px;background-color:#FFFFFF;'>$devices_table;</div>
+<br/><a class='button' href='deviceadd.htm?group=$get_id;'>Add Device</a><br/><br/>
+</form>
+<div><a class='button' style='float:right;' href='settings.htm'>Settings</a></div>
+<div><a class='button' style='float:right;' href='index.htm'>Back Home</a></div>
+</body>
+</html>

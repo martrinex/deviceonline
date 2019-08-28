@@ -1,0 +1,30 @@
+[default:setting_columns=3]
+<html>
+<head>
+<link href="style.css" rel="stylesheet" type="text/css">
+<script language='javascript'>
+function startdash(){
+ setInterval(updatedash,5000);
+ updatedash();
+}
+function updatedash(){
+ var xhttp = new XMLHttpRequest();
+ xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+	if(document.getElementById('dash').innerHTML!=xhttp.responseText){
+         document.getElementById("dash").innerHTML = xhttp.responseText;
+	}
+    }
+ };
+ xhttp.open("GET", "dashboard.htm?time="+(new Date()).getTime(), true);
+ xhttp.send();
+}
+</script>
+</head>
+<body onload='javascript:startdash();'>
+$defaultpasswarning;
+<div id='dash' style='column-count: $setting_columns;;column-rule: 1px solid lightblue;display: inline-flex;'>Loading...</div>
+[$url;]<br/>
+<div><a class='button' style='float:right;' href='settings.htm'>Settings</a></div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+[default:post_password='']
+[blockif:$post_btnsubmit=='Update User']
+ [query:olduser:=SELECT rowid,* FROM `users` WHERE `rowid`=$get_id]
+ [if:$olduser_username!=$post_username][query:r:=UPDATE `users` SET `username`='$post_username' WHERE `rowid`=$get_id;]
+ [if:$olduser_email!=$post_email][query:r:=UPDATE `users` SET `email`='$post_email' WHERE `rowid`=$get_id;]
+ [if:$r==1]
+ [echo:<div class='notice'>User '$post_username' Updated.</div>]
+[endif]
+
+[blockif:$post_password!='']
+ [hash:post_password]
+ [hash:post_cpassword]
+ [if:$post_password!=$post_cpassword][echo:<div class='error'>Password don't match</div>]
+ [if:$post_password==$post_cpassword][query:r:=UPDATE `users` SET `password`='$post_password' WHERE `rowid`=$get_id;]
+ [if:$r==1][echo:<div class='notice'>Updated user password.</div>]
+ [if:$r==1][initsettings]
+[endif]
+
+[query:user:=SELECT rowid,* FROM `users` WHERE `rowid`=$get_id]
+
+[blockif:$post_btnsubmit=='Delete User']
+[query:r:=DELETE FROM `users` WHERE rowid=$get_rowid AND rowid!=1]
+[if:$r==1][echo:<div class='notice'>User '$user_username' Deleted.</div>]
+[echo:<a class='button' style='float:right;' href='settings.htm'>Settings</a>]
+[echo:<a class='button' style='float:right;' href='index.htm'>Back Home</a></body></html>]
+[endpage]
+[endif]
+
+<html>
+<head>
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<form method='post' action='?id=$get_id;'>
+<h1>Update User</h1><br/>
+<label>Username:</label><br/><input type='text' name='username' value='$user_username;' /><br/>
+<label>Email:</label><br/><input type='text' name='email' value='$user_email;' /><br/>
+<label>Password:</label><br/><input type='password' name='password' value='' /><br/>
+<label>Confirm Password:</label><br/><input type='password' name='cpassword' value='' /><br/>
+<input type='submit' name='btnsubmit' value='Update User' />
+<input type='submit' name='btnsubmit' class='delete' value='Delete User' />
+</form>
+<a class='button' style='float:right;' href='settings.htm'>Settings</a>
+<a class='button' style='float:right;' href='index.htm'>Back Home</a>
+</body>
+</html>

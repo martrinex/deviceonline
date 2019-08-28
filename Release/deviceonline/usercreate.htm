@@ -1,0 +1,31 @@
+[blockif:$post_btnsubmit=='Create User']
+ [hash:post_password]
+ [hash:post_cpassword]
+ [echo:$post_password]
+ [if:$post_password!=$post_cpassword][echo:<div class='error'>Password don't match</div>]
+ [if:$post_password==$post_cpassword][query:r:=INSERT INTO `users` (`username`,`email`,`password`) VALUES ('$post_username','$post_email','')]
+ [if:$r==1]
+ [echo:<div class='notice'>User '$post_username' Created</div>]
+[endif]
+
+[default:post_username:='']
+[default:post_email:='']
+[default:post_password:='']
+[default:post_cpassword:='']
+<html>
+<head>
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<form method='post'>
+<h1>Create New User</h1><br/>
+<label>Username:</label><br/><input type='text' name='username' value='$post_username;' /><br/>
+<label>Email:</label><br/><input type='text' name='email' value='$post_email;' /><br/>
+<label>Password:</label><br/><input type='password' name='password' value='' /><br/>
+<label>Confirm Password:</label><br/><input type='password' name='cpassword' value='' /><br/>
+<input type='submit' name='btnsubmit' value='Create User' />
+</form>
+<a class='button' style='float:right;' href='settings.htm'>Settings</a>
+<a class='button' style='float:right;' href='index.htm'>Back Home</a>
+</body>
+</html>

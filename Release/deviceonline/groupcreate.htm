@@ -1,0 +1,28 @@
+[blockif:$get_j=='add']
+ [query:r:=INSERT INTO `groups` (`name`,`pingfrequency`,`mailto`) VALUES ('$post_name',$post_pingfrequency,'$post_mailto');]
+ [query:INSERT INTO `groupperiods` (`groupid`,`periodid`,`alertmins`) VALUES (last_insert_rowid(),1,$post_alertminutes);]
+ [if:$r==1][echo:<div class='notice'>Group '$post_name' Created</div>]
+[endif]
+[default:post_name:='']
+[default:post_pingfrequency:='15']
+[default:post_alertminutes:='5']
+[default:post_mailto:='']
+<html>
+<head>
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<form method='post' action='?j=add'>
+<h1>Create New Group</h1><br/>
+<label>Name:</label><br/><input type='text' name='name' value='$post_name;' /><br/>
+<label>Ping Frequency:</label><br/>
+<select name="pingfrequency">
+[option:$post_pingfrequency,1#1 min,5#5 mins,15#15 mins,30#30 mins,60#1 hour,720#12 hours,1440#24 hours]
+</select><br/>
+<label>Notify Delay:</label><br/><input type='text' name='alertminutes' value='$post_alertminutes;' /><br/>
+<label>Notify Email:</label><br/><input type='text' name='mailto' value='$post_mailto;' /><br/>
+<input type='submit' value='Create Group' />
+</form>
+<a class='button' style='float:right;' href='index.htm'>Back Home</a>
+</body>
+</html>

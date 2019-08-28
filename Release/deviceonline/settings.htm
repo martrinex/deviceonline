@@ -1,0 +1,63 @@
+[default:setting_columns=3]
+[default:setting_mailhost:='']
+[default:setting_mailport:='587']
+[default:setting_mailusername:='']
+[default:setting_mailssl:='false']
+[blockif:$post_btnsubmit=='Update Dashboard Settings']
+ [setting:columns=$post_columns]
+ [echo:<div class='notice'>Dashboard settings updated.</div>]
+[endif]
+[blockif:$post_btnsubmit=='Update Mail Settings']
+ [setting:mailhost=$post_mailhost]
+ [setting:mailport=$post_mailport]
+ [setting:mailusername=$post_mailusername]
+ [securesetting:mailpassword=$post_mailpassword]
+ [setting:mailssl=$post_mailssl]
+ [initsettings]
+ [echo:<div class='notice'>Mail settings updated.</div>]
+[endif]
+[if:$get_j=='remove'][dashboard:remove:$get_id]
+[if:$get_j=='up'][dashboard:up:$get_id]
+[if:$get_j=='down'][dashboard:down:$get_id]
+[query:groups:=SELECT "<a href='groupupdate.htm?id="||`rowid`||"'>"||`name`||"</a>" AS `Name`,`pingfrequency` AS `Ping Every`,`mailto` AS `Notify`,datetime(`nextping`,'localtime') AS `Next Ping`,`dashboardid`||"&nbsp;<a href='?j=up&id="||`rowid`||"'><img src='up.png' /></a><a href='?j=down&id="||`rowid`||"'><img src='down.png' /></a><a href='?j=remove&id="||`rowid`||"' /><img src='remove.png' /></a>" AS `Dashboard` FROM `groups` ORDER BY `dashboardid`]
+[query:users:=SELECT "<a href='userupdate.htm?id="||`rowid`||"'>"||`username`||"</a>" AS `Username`,`email` as `Email`,`laston` as `Last Online` FROM `users`]
+[query:periods:=SELECT "<a href=periodupdate.htm?id="||`rowid`||">"||`name`||"</a>" AS `Name`,`mon` AS `Mon`,`tue` AS `Tue`,`wed` AS `Wed`,`thur` as `Thur`,`Fri` AS `Fri`,`Sat` AS `Sat`,`Sun` AS `Sun`,time(`start`) as `Start`,time(`end`) as `End` FROM `periods`]
+<html>
+<head>
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+$defaultpasswarning;
+<form method='post'><h1>Dashboard</h1><label>Columns:</label><input type='text' name='columns' value='$setting_columns;' /><input type='submit' name='btnsubmit' value="Update Dashboard Settings" /></form>
+<form><h1>Groups</h1>
+<div style='margin:8px;background-color:#FFFFFF;'>$groups_table;</div>
+<br/><a class='button' href='groupcreate.htm'>Create Group</a><br/><br/>
+</form>
+<form method='post'><h1>Time Periods</h1>
+<div style='margin:8px;background-color:#FFFFFF;'>$periods_table;</div>
+<br/><a class='button' href='periodcreate.htm'>Create Time Period</a><br/><br/>
+</form>
+<form>
+<h1>Users</h1>
+<div style='margin:8px;background-color:#FFFFFF;'>$users_table;</div>
+<br/><a class='button' href='usercreate.htm'>Create User</a><br/><br/>
+</form>
+<form method='post'>
+<h1>Mail Settings:</h1>
+<label>SMTP Server / Host:</label><br/><input type='text' name='mailhost' value='$setting_mailhost;' /><br/>
+<label>SMTP Port:</label><br/><input type='text' name='mailport' value='$setting_mailport;' /><br/>
+<label>SMTP Username:</label><br/><input type='text' name='mailusername' value='$setting_mailusername;' /><br/>
+<label>SMTP Password:</label><i>Password will be lost if you change the windows service user.</i><br/><input type='password' name='mailpassword' /><br/>
+<label>SMTP Use SSL:</label><input type='checkbox' name='mailssl' value='true' checked='$setting_mailssl' /><br/>
+<input type='submit' name='btnsubmit' value="Update Mail Settings" />
+</form>
+<form>
+<h1>About</h1>
+Original author: Martin Sykes admin@martrinex.net<br/>
+Open source project, please get updates from github for deviceonline.<br/>
+Installed version: $version;<br/>
+<a href='https://github.com/martrinex/deviceonline/'><input type='button' value="View GitHub" /></a>
+</form>
+<div><a target='_blank' class='button' style='float:right;' href='index.htm'>Back Home</a></div>
+</body>
+</html>

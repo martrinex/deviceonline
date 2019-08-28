@@ -1,0 +1,36 @@
+<html>
+<head>
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+[blockif:$post_action=='Update Device']
+[query:r:=UPDATE `devices` SET `name`='$post_name' WHERE rowid=$post_rowid]
+[if:$r==1][echo:<div class='notice'>Device '$post_name' Updated.</div>]
+[endif]
+
+[query:device:=SELECT rowid,* FROM `devices` WHERE `rowid`=$get_id]
+
+[blockif:$post_action=='Delete Device']
+[query:r:=DELETE FROM `devices` WHERE `rowid`=$post_rowid]
+[if:$r==1][query:DELETE FROM `uptime` WHERE `deviceid`=$post_rowid]
+[if:$r==1][echo:<div class='notice'>Device '$device_name' Deleted.</div>]
+[echo:<a class='button' style='float:right;' href='groupupdate.htm?id=$device_groupid'>Back To Group</a>]
+[echo:<a class='button' style='float:right;' href='index.htm'>Back Home</a></body></html>]
+[endpage]
+[endif]
+
+
+
+[default:post_name:='']
+[default:post_groupid:='$get_group']
+<form method='post' action='?j=update&id=$get_id;'>
+<h1>Add New Device</h1><br/>
+<label>Name:</label><br/><input type='text' name='name' value='$device_name;' /><br/>
+<input type='hidden' name='rowid' value='$get_id;' />
+<input type='submit' name='action' value='Update Device' />
+<input type='submit' class='delete' name='action' value='Delete Device' />
+</form>
+<a class='button' style='float:right;' href='groupupdate.htm?id=$device_groupid;'>Back To Group</a>
+<a class='button' style='float:right;' href='index.htm'>Back Home</a>
+</body>
+</html>

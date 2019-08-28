@@ -1,0 +1,22 @@
+[default:post_username:='']
+<html>
+<head>
+[blockif:$post_submit=='Logon']
+[logon:r]
+[if:$r=='True'][echo:<meta http-equiv="refresh" content="3;url=index.htm">]
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+$defaultpasswarning;
+[if:$r=='True'][echo:<div class='notice'>Success logged in.<br/>Click <a href='index.htm'>here</a> if you are not redirected.</div>]
+[if:$r=='False'][echo:<div class='error'>Invalid username and/or password.</div>]
+[endif]
+[if:$r=='True'][endpage]
+<form action='?j=login' method='post' >
+<h1>Please login:</h1>
+<label>Username:</label><br/><input type='text' name='username' value='$post_username;' autofocus /><br/>
+<label>Password:</label><br/><input type='password' name='password' /><br/>
+<input type='submit' name='submit' value='Logon' /><br/>
+</form>
+</body>
+</html>

@@ -1,0 +1,162 @@
+.notice {
+	background-color: #AAF;
+	margin: 5px;
+	padding: 2px;
+	border: 2px dashed #16C;
+	font-weight: bold;
+	color: #16C;
+}
+.warning {
+	background-color: #FFA;
+	margin: 5px;
+	padding: 2px;
+	border: 2px dashed #E93;
+	font-weight: bold;
+	color: #E93;
+}
+.error {
+	background-color: #FAA;
+	margin: 5px;
+	padding: 2px;
+	border: 2px dashed #D10;
+	font-weight: bold;
+	color: #D10;
+}
+label {
+	margin-top: 5px;
+	margin-right: 15px;
+	margin-bottom: 2px;
+	margin-left: 15px;
+	font-weight: lighter;
+	font-size: large;
+}
+.blueheading{
+	display: block;
+	font-size: larger;
+	font-weight: lighter;
+	background-color: #39F;
+	color: #FFF;
+	padding: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 15px;
+	margin-left: 0px;
+}
+form h1 {
+	display: block;
+	font-size: larger;
+	font-weight: lighter;
+	background-color: #39F;
+	color: #FFF;
+	padding: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 15px;
+	margin-left: 0px;
+}
+form {
+	margin: 15px;
+	padding: 0px;
+	background-color:#DDF;
+	border-radius: 6px;
+	border: 1px solid #CCC;	
+}
+input{
+	margin-top: 2px;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	margin-left: 15px;	
+}
+select{
+	margin-top: 2px;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	margin-left: 15px;
+	padding: 5px;
+	border: 1px solid #CCC;
+	width: 40%;	
+	border-radius: 4px;
+}
+input[type=text] {
+	padding: 5px;
+	border: 1px solid #CCC;
+	width: 90%;
+	border-radius: 4px;
+}
+input[type=text]:focus {
+  border: 2px solid #555;
+}
+input[type=password] {
+	padding: 5px;
+	border: 1px solid #CCC;
+	width: 90%;
+	border-radius: 4px;
+}
+input[type=password]:focus {
+  border: 2px solid #555;
+}
+input[type=submit] {
+	border: none;
+	background-color: #69F;
+	margin: 15px;
+	padding-top: 5px;
+	padding-right: 15px;
+	padding-bottom: 5px;
+	padding-left: 15px;
+	color: #FFF;
+	font-size: large;
+	font-weight: lighter;
+}
+input[type=button] {
+	border: none;
+	background-color: #69F;
+	margin: 15px;
+	padding-top: 5px;
+	padding-right: 15px;
+	padding-bottom: 5px;
+	padding-left: 15px;
+	color: #FFF;
+	font-size: large;
+	font-weight: lighter;
+}
+input[type=submit].delete {
+	background-color: #F30;	
+}
+table {
+	border: thin solid #36F; 
+	min-width: 200px;	
+	margin: 0px;
+}
+thead td {
+	background-color:#06F;
+	color:#FFF;
+}
+.blueheading a{
+	color:#FFF;
+}
+td{
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	padding-left: 10px;	
+}
+tr.alt td{
+	background-color:#EEF;	
+}
+a.button{
+	margin-top: 2px;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	margin-left: 15px;
+	border: none;
+	background-color: #69F;
+	margin: 15px;
+	padding-top: 5px;
+	padding-right: 15px;
+	padding-bottom: 5px;
+	padding-left: 15px;
+	color: #FFF;
+	font-size: large;
+	font-weight: lighter;
+	text-decoration: none;
+}

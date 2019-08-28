@@ -1,0 +1,54 @@
+[blockif:$post_btnsubmit=='Create Time Period']
+ [default:mon:='False'][default:tue:='False'][default:wed:='False'][default:thur:='False'][default:fri:='False'][default:sat:='False'][default:sun:='False']
+ [if:$post_mon=='checked'][set:mon:='True']
+ [if:$post_tue=='checked'][set:tue:='True']
+ [if:$post_wed=='checked'][set:wed:='True']
+ [if:$post_thur=='checked'][set:thur:='True']
+ [if:$post_fri=='checked'][set:fri:='True']
+ [if:$post_sat=='checked'][set:sat:='True']
+ [if:$post_sun=='checked'][set:sun:='True']
+ [query:r:=INSERT INTO `periods` (`name`,`mon`,`tue`,`wed`,`thur`,`fri`,`sat`,`sun`,`start`,`end`) VALUES ('$post_name',$mon,$tue,$wed,$thur,$fri,$sat,$sun,'$post_start','$post_end')]
+ [if:$r==1]
+ [echo:<div class='notice'>Time Period '$post_name' Created</div>]
+[endif]
+[default:post_name:='']
+[default:post_mon:='checked']
+[default:post_tue:='checked']
+[default:post_wed:='checked']
+[default:post_thur:='checked']
+[default:post_fri:='checked']
+[default:post_sat:='']
+[default:post_sun:='']
+[default:post_start:='09:00']
+[default:post_end:='17:00']
+<html>
+<head>
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<form method='post'>
+<h1>Create New Time Period</h1><br/>
+<label>Name:</label><br/><input type='text' name='name' value='$post_name;' /><br/>
+<label>Days:</label>
+<input type='checkbox' name='mon' value='checked' $post_mon; />Mon,
+<input type='checkbox' name='tue' value='checked' $post_tue; />Tue,
+<input type='checkbox' name='wed' value='checked' $post_wed; />Wed,
+<input type='checkbox' name='thur' value='checked' $post_thur; />Thur,
+<input type='checkbox' name='fri' value='checked' $post_fri; />Fri,
+<input type='checkbox' name='sat' value='checked' $post_sat; />Sat,
+<input type='checkbox' name='sun' value='checked' $post_sun; />Sun.
+<br/>
+<label>Period Start:</label><br/>
+<select name="start">
+[option:$post_start,01:00,02:00,03:00,04:00,05:00,06:00,07:00,08:00,09:00,10:00,11:00,12:00,13:00,14:00,15:00,16:00,17:00,18:00,19:00,20:00,21:00,22:00,23:00,00:00]
+</select><br/>
+<label>Period End:</label><br/>
+<select name="end">
+[option:$post_end,01:00,02:00,03:00,04:00,05:00,06:00,07:00,08:00,09:00,10:00,11:00,12:00,13:00,14:00,15:00,16:00,17:00,18:00,19:00,20:00,21:00,22:00,23:00,00:00]
+</select><br/>
+<input type='submit' name='btnsubmit' value='Create Time Period' />
+</form>
+<a class='button' style='float:right;' href='settings.htm'>Settings</a>
+<a class='button' style='float:right;' href='index.htm'>Back Home</a>
+</body>
+</html>
