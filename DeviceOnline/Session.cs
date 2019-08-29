@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -35,6 +36,18 @@ namespace DeviceOnline
                 // work out file request path
                 String page = request.RawUrl.Substring(Program.prefix.Length + 1).Replace("/", "\\");
                 if (page.Contains("?")) page = page.Substring(0, page.IndexOf("?"));
+                // fix if user doesn't place backslash it ends up, up a folder and server stops getting requests (so redirect them)
+                if (page == "")
+                {
+                    System.IO.Stream routput = context.Response.OutputStream;
+                    context.Response.Headers.Add("Location: "+Program.prefix+"/index.htm");
+                    string redirect = "<HTML><head><meta http-equiv='refresh' content='0; url="+Program.prefix+"/index.htm' ></head><BODY><a href='"+Program.prefix+"/index.htm'>301 Content moved.</a></BODY></HTML>";
+                    byte[] rbuffer = System.Text.Encoding.UTF8.GetBytes(redirect);
+                    context.Response.StatusCode = 301;
+                    routput.Write(rbuffer, 0, rbuffer.Length);
+                    routput.Close();
+                    return;
+                }
                 if (page.EndsWith("\\")) page += "index.htm";
                 // if no username restrict access to logon.htm and the style sheet.
                 if (username == null)
@@ -388,6 +401,33 @@ namespace DeviceOnline
                     }
                     command.value += "</table>";
                     dbreader.Close();
+                    break;
+                case "mail":
+                    string[] mail = command.value.Split(',');
+                    if (mail.Length < 3)
+                    {
+                        command.value = "<div class='error'>Expected: to,subject,body</div>";
+                    }
+                    else
+                    {
+                        string mailto      = mail[0];
+                        string mailsubject = mail[1];
+                        string mailbody    = mail[2];
+                        try
+                        {
+                            MailMessage msg = new MailMessage();
+                            msg.From = new MailAddress(DB.getSetting("mailusername"));
+                            msg.To.Add(mailto);
+                            msg.Subject = mailsubject;
+                            msg.Body = mailbody;
+                            Notifications.smtp.Send(msg);
+                            command.value = "";
+                        }
+                        catch
+                        {
+                            command.value = "<div class='error'>Mail send error</div>";
+                        }
+                    }
                     break;
                 case "dashboard":
                     // hard coded, for the settings page, to move groups around the dashboard screen

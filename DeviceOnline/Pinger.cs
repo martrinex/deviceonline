@@ -30,8 +30,7 @@ namespace DeviceOnline
                     int rowid = r.GetInt32(2);
                     string sqli = "UPDATE `groups` SET `nextping`=datetime(CURRENT_TIMESTAMP,'+" + pingfrequency + " minutes') WHERE  `rowid`=" + rowid;
                     new SQLiteCommand(sqli, DB.db).ExecuteNonQuery();
-                    Console.WriteLine("Need to ping: " + r.GetString(0));
-                    Console.WriteLine(sqli);
+                    Console.WriteLine("Need to ping group: '" + r.GetString(0)+"'");
                     new PingGroup(rowid, pingfrequency);
                 }
                 r.Close();

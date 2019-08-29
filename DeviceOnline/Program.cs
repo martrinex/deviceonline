@@ -16,14 +16,20 @@ namespace DeviceOnline
     /// Version 0.9
     /// -First test release.
     /// 
-    /// ToDo list:
+    /// Version 0.91
+    /// -Fixed path on pie charts so it works when running as a service.
+    /// -Auto redirect if user doesn't put a / at the end of the address.
+    /// -new test email button
+    /// -fixed deviceuptime to not crash when no data
+    /// -removed group uptime button from the group uptime page
+    /// -need transparency on pie chart background
     /// -need to merge emails over a 5 second period
+    /// -improved console text a little
+    /// ToDo list:
     /// -need to email when server comes back online
     /// -need to re-setup next ping when group ping frequency changes.
-    /// -need a test email button
     /// -need to restrict / validate user input on forms
     /// -need to enable NTLM option for login
-    /// -need transparency on pie chart background
     /// </summary>
     /// 
     /** 
@@ -41,7 +47,7 @@ namespace DeviceOnline
         public static String prefix = "deviceonline";
         public static Notifications notifications;
         public static string path = "";
-        public static float version = 0.9F;
+        public static float version = 0.91F;
 
         static void Main()
         {
@@ -96,7 +102,6 @@ namespace DeviceOnline
                 Console.WriteLine("--------------------");
                 Console.WriteLine("Server is now running, press 'Q' to close server.");
                 Console.WriteLine("--------------------");
-                Console.WriteLine("Init Settings");
                 while (Console.ReadKey().Key != ConsoleKey.Q) { }
                 // user hit 'q' start shutting down (the service does this code onstop)
                 running = false;

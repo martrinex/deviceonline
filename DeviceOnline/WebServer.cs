@@ -96,13 +96,13 @@ namespace DeviceOnline
         public static void BakePie(string filename, Brush pie, Brush peace, float peaceAngle, int size, int margin, Pen border)
         {
             Rectangle rectPie = new Rectangle(margin, margin, size - margin - margin, size - margin - margin);
-            Bitmap bmp = new Bitmap(size, size);
+            Bitmap bmp = new Bitmap(size, size,PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(bmp);
-            g.FillRectangle(Brushes.White, new Rectangle(0, 0, size, size));
+            //g.FillRectangle(Brushes.White, new Rectangle(0, 0, size, size));
             g.FillEllipse(pie, rectPie);
             g.FillPie(peace, rectPie, 270, peaceAngle);
             if (border != null) g.DrawEllipse(border, rectPie);
-            bmp.Save("deviceonline\\" + filename, ImageFormat.Png);
+            bmp.Save(Program.path+"deviceonline\\" + filename, ImageFormat.Png);
         }
     }
 
