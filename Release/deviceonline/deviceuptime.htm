@@ -43,7 +43,7 @@
 Report showing: $reportfrom; to $reportto;<br/>
 
 <h2>Total Uptime</h2>
-[pie:128,10,$totals_uptime,totaluptime.png,Total uptime: $totals_uptime]
+[if:$totals_uptime!=''][pie:128,10,$totals_uptime,totaluptime.png,Total uptime: $totals_uptime]
 $totals_table;
 <h2>Total Uptime per period</h2>
 

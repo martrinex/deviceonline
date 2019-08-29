@@ -7,6 +7,10 @@
  [setting:columns=$post_columns]
  [echo:<div class='notice'>Dashboard settings updated.</div>]
 [endif]
+[blockif:$post_btnsubmit=='Send Test Email']
+ [mail:$setting_mailusername,'Test Email','Device Online Test Email']
+ [echo:<div class='notice'>Test Message Sent</div>]
+[endif]
 [blockif:$post_btnsubmit=='Update Mail Settings']
  [setting:mailhost=$post_mailhost]
  [setting:mailport=$post_mailport]
@@ -49,6 +53,7 @@ $defaultpasswarning;
 <label>SMTP Username:</label><br/><input type='text' name='mailusername' value='$setting_mailusername;' /><br/>
 <label>SMTP Password:</label><i>Password will be lost if you change the windows service user.</i><br/><input type='password' name='mailpassword' /><br/>
 <label>SMTP Use SSL:</label><input type='checkbox' name='mailssl' value='true' checked='$setting_mailssl' /><br/>
+<input type='submit' name='btnsubmit' value="Send Test Email" /> (click update first)<br/>
 <input type='submit' name='btnsubmit' value="Update Mail Settings" />
 </form>
 <form>
