@@ -1,7 +1,7 @@
 # deviceonline
 Pings devices on a network, mini web server and windows service, to view status, configure service and setup email alerts.
 
-Definately re-inventing a wheel, but this pings devices on a network but more uniquely provides an easy to setup and use 
+Definately re-inventing a wheel, this pings devices on a network but more uniquely provides an easy to setup and use self contained
 windows service and mini webserver / sqlite to both configure device pinging and view reports, aswell as setup email notifications.
 
 You need .net framework 4 or later.
