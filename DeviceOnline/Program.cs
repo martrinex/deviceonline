@@ -25,11 +25,16 @@ namespace DeviceOnline
     /// -need transparency on pie chart background
     /// -need to merge emails over a 5 second period
     /// -improved console text a little
+    /// 
+    /// Version 0.92
+    /// -fix new queue system never added the messages to the queue (Notifications.cs)
+    /// -send email when device comes back online
+    /// 
     /// ToDo list:
-    /// -need to email when server comes back online
     /// -need to re-setup next ping when group ping frequency changes.
     /// -need to restrict / validate user input on forms
     /// -need to enable NTLM option for login
+    /// -add option to email when back online
     /// </summary>
     /// 
     /** 
@@ -47,7 +52,7 @@ namespace DeviceOnline
         public static String prefix = "deviceonline";
         public static Notifications notifications;
         public static string path = "";
-        public static float version = 0.91F;
+        public static float version = 0.92F;
 
         static void Main()
         {

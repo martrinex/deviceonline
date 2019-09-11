@@ -20,10 +20,15 @@ namespace DeviceOnline
         private List<Message> messageQueue = new List<Message>();
 
         // add offline device
-        public void AddNotification(int deviceid, string devicename, string notifyemail, int delay)
+        public void AddNotification(int deviceid, string devicename, string notifyemail, int delay, bool online)
         {
             Console.WriteLine("## New Notify:" + devicename + "," + delay);
             // check if similar notification, but this new one has a shorter time (shorter warning times setup for same device by user)
+            if (online)
+            {
+                AddToMessageQueue(notifyemail, "Device(s) back online", "'" + devicename + "' is back online.");
+                return;
+            }
             bool found = false;
             foreach (Notify device in devices)
             {
@@ -53,6 +58,7 @@ namespace DeviceOnline
             msg.subject = subject;
             msg.body = body + "<br/>";
             msg.sendtimeout = DateTime.Now.Ticks + (5 * 1000); // delay 5 seconds to find similar messages
+            messageQueue.Add(msg); // fix forgot to add it to the queue! 0.92
         }
 
         // service what checks all devices if they are still offline by the timeout then an email is sent

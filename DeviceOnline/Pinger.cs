@@ -45,14 +45,16 @@ namespace DeviceOnline
     {
         public string name, notifyemail;
         public bool online = false, reported = false;
+        public bool lastKnownOnlineStatus = false; // 0.92 to enable emails when devices comes back online
         public int rowid, tries = 0, periodid, alerttime, pingfrequency;
-        public PingDevice(int rowid, string name, int periodid, int alerttime, string notifyemail, int pingfrequency, bool reported)
+        public PingDevice(int rowid, string name, int periodid, int alerttime, string notifyemail, int pingfrequency, bool reported, bool lastKnownOnlineStatus)
         {
             this.rowid = rowid; this.name = name;
             this.periodid = periodid; this.alerttime = alerttime;
             this.notifyemail = (notifyemail == "") ? null : notifyemail;
             this.pingfrequency = pingfrequency;
             this.reported = reported;
+            this.lastKnownOnlineStatus = lastKnownOnlineStatus;
         }
     }
 
@@ -76,9 +78,9 @@ namespace DeviceOnline
             reader.Close();
             Console.WriteLine("mins:" + alertmins + ",period:" + periodid);
             // get all the devices to ping
-            SQLiteCommand sql = new SQLiteCommand("SELECT `rowid`,`name`,`reported` FROM `devices` WHERE `groupid`=" + groupid, DB.db);
+            SQLiteCommand sql = new SQLiteCommand("SELECT `rowid`,`name`,`reported`,`online` FROM `devices` WHERE `groupid`=" + groupid, DB.db);
             SQLiteDataReader r = sql.ExecuteReader();
-            while (r.Read()) pingList.Add(new PingDevice(r.GetInt32(0), r.GetString(1), periodid, alertmins, notifyemail, pingfrequency, r.GetBoolean(2)));
+            while (r.Read()) pingList.Add(new PingDevice(r.GetInt32(0), r.GetString(1), periodid, alertmins, notifyemail, pingfrequency, r.GetBoolean(2),r.GetBoolean(3)));
             r.Close();
             // start pinging them in the new thread
             try { new Thread(BeginPingGroup).Start(); } catch { }
@@ -107,6 +109,11 @@ namespace DeviceOnline
                         catch { }
                         if (device.online)
                         {
+                            if(device.reported && !device.lastKnownOnlineStatus)
+                            {
+                                //TODO: notify a server coming back online
+                                Program.notifications.AddNotification(device.rowid, device.name, device.notifyemail, 0, true);
+                            }
                             // new device reporting online, cache sql block to update the db
                             sql += "UPDATE `devices` SET `online`=TRUE,`reported`=FALSE, `lastonline`=CURRENT_TIMESTAMP WHERE `rowid`=" + device.rowid + ";";
                             object orowid = (Program.running) ? new SQLiteCommand("SELECT `rowid` FROM `uptime` WHERE `deviceid`=" + device.rowid + " AND `day`=DATE() AND `period`=" + device.periodid, DB.db).ExecuteScalar() : null;
@@ -147,7 +154,7 @@ namespace DeviceOnline
                         // setup notification for devices offline, the notification class keeps trying to contact the device to avoid spamming recipients.
                         if (device.notifyemail != null && !device.reported)
                         {
-                            Program.notifications.AddNotification(device.rowid, device.name, device.notifyemail, device.alerttime);
+                            Program.notifications.AddNotification(device.rowid, device.name, device.notifyemail, device.alerttime,false);
                         }
                     }
                 }
