@@ -22,6 +22,15 @@ Just enough to get everything working with devices, device groups, dashboard, se
 time periods to set notification times for peak off peak etc, view device and group uptime with basic pie charts and uptime percents.
 Filter uptime results by day/week/month.
 
-Whats missing? setting up https certificates, data validation, email combining (if 10 devices go down you get 10 emails at the minute)
+Version 0.91
+added email combining
+a few bug fixes
+removed uneeded text from console
+
+Version 0.92
+fixed emails not sending after 0.91
+added email when device comes back online
+
+Whats missing? setting up https certificates, data validation
 
 Enjoy.
